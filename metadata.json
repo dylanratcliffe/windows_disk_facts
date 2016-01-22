@@ -1,12 +1,37 @@
 {
-  "name": "dylanratcliffe-disk_facts",
+  "name": "dylanratcliffe-windows_disk_facts",
   "version": "0.1.0",
   "author": "Dylan Ratcliffe",
   "summary": "Disk related facts for Windows",
   "license": "Apache-2.0",
-  "source": "https://github.com/dylanratcliffe/disk_facts",
-  "project_page": "https://github.com/dylanratcliffe/disk_facts",
-  "issues_url": "https://github.com/dylanratcliffe/disk_facts/issues",
+  "source": "https://github.com/dylanratcliffe/windows_disk_facts",
+  "project_page": "https://github.com/dylanratcliffe/windows_disk_facts",
+  "issues_url": "https://github.com/dylanratcliffe/windows_disk_facts/issues",
   "dependencies": [],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Windows",
+      "operatingsystemrelease": [
+        "Server 2003",
+        "Server 2003 R2",
+        "Server 2008",
+        "Server 2008 R2",
+        "Server 2012",
+        "Server 2012 R2",
+        "7",
+        "8"
+      ]
+    }
+  ],
+  "requirements": [
+   {
+     "name": "pe",
+     "version_requirement": ">= 3.3.0"
+   },
+   {
+     "name": "puppet",
+     "version_requirement": ">= 3.3.0"
+   }
+ ],
   "data_provider": null
 }
