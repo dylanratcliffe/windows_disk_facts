@@ -3,21 +3,21 @@
 #### Table of Contents
 
 1. [Description](#description)
-1. [Usage - Configuration options and additional functionality](#usage)
+1. [Usage](#usage)
 
 ## Description
 
 This module adds  the following facts on Windows:
 
-### `disks`
+### `$::disks`
 
 The output of the Powershell `Get-Disk` command, but in a more Puppet-friendly format
 
-### `drives`
+### `$::drives`
 
 The output of the Powershell `Get-PSDrive -PSProvider 'FileSystem'` command, but in a more Puppet-friendly format
 
-### `partitions`
+### `$::partitions`
 
 The output of the Powershell `Get-Partition` command, but in a more Puppet-friendly format
 

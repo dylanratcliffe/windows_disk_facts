@@ -4,9 +4,9 @@
   "author": "Dylan Ratcliffe",
   "summary": "Disk related facts for Windows",
   "license": "Apache-2.0",
-  "source": "",
-  "project_page": null,
-  "issues_url": null,
+  "source": "https://github.com/dylanratcliffe/disk_facts",
+  "project_page": "https://github.com/dylanratcliffe/disk_facts",
+  "issues_url": "https://github.com/dylanratcliffe/disk_facts/issues",
   "dependencies": [],
   "data_provider": null
 }
