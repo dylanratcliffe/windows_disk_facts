@@ -1,1 +1,0 @@
-@{"disks" = (Get-Disk | Select-Object * -ExcludeProperty CimClass,CimInstanceProperties,CimSstemProperties | ForEach-Object -begin {$hash = @{}} -process {$hash.Add([string]$_.Number,$_)} -end {$hash})} | ConvertTo-Json -Depth 999 -Compress
