@@ -8,6 +8,9 @@ Facter.add('disks') do
     disks_hashes_renamed = []
     out = {}
 
+    # Make sure that we can handle only one disk
+    disks_hashes = [disks_hashes] if disks_hashes.kind_of?(Hash)
+    
     # Change camel case to unserscores
     disks_hashes.each do |disk|
       current_disk_renamed = {}
