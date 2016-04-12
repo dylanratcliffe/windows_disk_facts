@@ -4,10 +4,12 @@ Facter.add('drives') do
   require_relative '../puppet_x/disk_facts/underscore.rb'
   require 'json'
   setcode do
-    #drives = JSON.parse(Facter::Core::Execution.exec("powershell.exe -Command \"Get-PSDrive -PSProvider 'FileSystem' | Select-Object * -ExcludeProperty Provider,Credential,CurrentLocation | ForEach-Object -Begin {$drives = @()} -Process {$_.Free = $_.Free/1MB;$_.Used = $_.Used/1MB;$drives +=$_} -End {$drives}| ConvertTo-Json -Depth 999 -Compress\""))
     drives = JSON.parse(Facter::Core::Execution.exec("powershell.exe -Command \"Get-PSDrive -PSProvider 'FileSystem' | Select-Object * -ExcludeProperty Provider,Credential,CurrentLocation | ConvertTo-Json -Depth 999 -Compress\""))
     drives_renamed = []
     out = {}
+
+    # Make sure that we can handle only one drive
+    drives = [drives] if drives.kind_of?(Hash)
 
     # Change camel case to unserscores
     drives.each do |drive|

@@ -7,6 +7,9 @@ Facter.add('partitions') do
     partitions = JSON.parse(Facter::Core::Execution.exec("powershell.exe -Command \"Get-Partition | Select-Object * -ExcludeProperty CimClass,CimInstanceProperties,CimSystemProperties | ConvertTo-Json -Depth 999 -Compress\""))
     partitions_renamed = []
 
+    # Make sure that we can handle only one partition
+    partitions = [partitions] if partitions.kind_of?(Hash)
+
     # Change camel case to unserscores
     partitions.each do |partition|
       current_partition_renamed = {}
