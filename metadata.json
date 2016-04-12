@@ -1,6 +1,6 @@
 {
   "name": "dylanratcliffe-windows_disk_facts",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Dylan Ratcliffe",
   "summary": "Disk related facts for Windows",
   "license": "Apache-2.0",
@@ -19,7 +19,8 @@
         "Server 2012",
         "Server 2012 R2",
         "7",
-        "8"
+        "8",
+        "10"
       ]
     }
   ],
