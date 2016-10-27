@@ -4,7 +4,7 @@ Facter.add('partitions') do
   require_relative '../puppet_x/disk_facts/underscore.rb'
   require 'json'
   setcode do
-    partitions = JSON.parse(Facter::Core::Execution.exec("powershell.exe -Command \"Get-Partition | Select-Object * -ExcludeProperty CimClass,CimInstanceProperties,CimSystemProperties | ConvertTo-Json -Depth 999 -Compress\""))
+    partitions = JSON.parse(Facter::Core::Execution.exec("powershell.exe -Command \"Get-Partition | Select-Object * -ExcludeProperty CimClass,CimInstanceProperties,CimSystemProperties | ConvertTo-Json -Depth 100 -Compress\""))
     partitions_renamed = []
 
     # Make sure that we can handle only one partition

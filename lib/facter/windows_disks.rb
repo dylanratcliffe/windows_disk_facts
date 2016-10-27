@@ -4,7 +4,7 @@ Facter.add('disks') do
   require_relative '../puppet_x/disk_facts/underscore.rb'
   require 'json'
   setcode do
-    disks_hashes = JSON.parse(Facter::Core::Execution.exec('powershell.exe -Command "Get-Disk | select *  -ExcludeProperty CimClass,CimInstanceProperties,CimSystemProperties | ConvertTo-Json -Depth 999 -Compress"'))
+    disks_hashes = JSON.parse(Facter::Core::Execution.exec('powershell.exe -Command "Get-Disk | select *  -ExcludeProperty CimClass,CimInstanceProperties,CimSystemProperties | ConvertTo-Json -Depth 100 -Compress"'))
     disks_hashes_renamed = []
     out = {}
 
