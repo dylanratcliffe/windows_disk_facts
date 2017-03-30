@@ -4,13 +4,17 @@ Facter.add('disks') do
   require_relative '../puppet_x/disk_facts/underscore.rb'
   require 'json'
   setcode do
+    kernelmajversion = Facter.value('kernelmajversion')
+    next if kernelmajversion == '6.0' # Get-disk is not available on Windows Server 2008
+    next if kernelmajversion == '6.1' # Get-disk is not available on Windows Server 2008 R2
+
     disks_hashes = JSON.parse(Facter::Core::Execution.exec('powershell.exe -Command "Get-Disk | select *  -ExcludeProperty CimClass,CimInstanceProperties,CimSystemProperties | ConvertTo-Json -Depth 100 -Compress"'))
     disks_hashes_renamed = []
     out = {}
 
     # Make sure that we can handle only one disk
     disks_hashes = [disks_hashes] if disks_hashes.kind_of?(Hash)
-    
+
     # Change camel case to unserscores
     disks_hashes.each do |disk|
       current_disk_renamed = {}
