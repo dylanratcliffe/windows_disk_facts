@@ -1,10 +1,21 @@
 Facter.add('drives') do
   confine :kernel => 'windows'
+  
+  # Windows 2012 R2
+  if :kernelversion == '6.4.9600'
+    depth = '999'
+  # Windows 2016
+  elsif :kernelversion == '10.0.14393'
+    depth = '100'
+  # Default
+  else
+    depth = '999'
+  end
 
   require_relative '../puppet_x/disk_facts/underscore.rb'
   require 'json'
   setcode do
-    drives = JSON.parse(Facter::Core::Execution.exec("powershell.exe -Command \"Get-PSDrive -PSProvider 'FileSystem' | Select-Object * -ExcludeProperty Provider,Credential,CurrentLocation | ConvertTo-Json -Depth 999 -Compress\""))
+    drives = JSON.parse(Facter::Core::Execution.exec("powershell.exe -Command \"Get-PSDrive -PSProvider 'FileSystem' | Select-Object * -ExcludeProperty Provider,Credential,CurrentLocation | ConvertTo-Json -Depth #{depth} -Compress\"")) rescue []
     drives_renamed = []
     out = {}
 
