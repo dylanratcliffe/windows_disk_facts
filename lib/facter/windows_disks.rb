@@ -1,13 +1,16 @@
 Facter.add('disks') do
   confine :kernel => 'windows'
 
-  # Windows 2012 R2
-  if :kernelversion == '6.4.9600'
+  #2012 R2 - kernelversion => 6.3.9600
+  #2016 - kernelversion => 10.0.14393
+
+  # Kernel version
+  kernelv = Facter.value(:kernelversion)
+
+  if kernelv == '6.4.9600'
     depth = '999'
-  # Windows 2016
-  elsif :kernelversion == '10.0.14393'
+  elsif kernelv == '10.0.14393'
     depth = '100'
-  # Default
   else
     depth = '999'
   end
@@ -15,7 +18,7 @@ Facter.add('disks') do
   require_relative '../puppet_x/disk_facts/underscore.rb'
   require 'json'
   setcode do
-    disks_hashes = JSON.parse(Facter::Core::Execution.exec("powershell.exe -Command \"Get-Disk | select *  -ExcludeProperty CimClass,CimInstanceProperties,CimSystemProperties | ConvertTo-Json -Depth #{depth} -Compress\"")) rescue []
+    disks_hashes = JSON.parse(Facter::Core::Execution.exec("powershell.exe -Command \"Get-Disk | Select-Object * -ExcludeProperty CimClass,CimInstanceProperties,CimSystemProperties | ConvertTo-Json -Depth #{depth} -Compress\"")) rescue []
     disks_hashes_renamed = []
     out = {}
 
