@@ -34,3 +34,7 @@ $::partitions.each |$partition| {
 # Get the free size of C:\
 notice($::drives['C']['free_bytes'])
 ```
+</br></br>
+```
+Contributor: Ovidiu Calbajos <ovidiu.calbajos gmail.com>
+```
