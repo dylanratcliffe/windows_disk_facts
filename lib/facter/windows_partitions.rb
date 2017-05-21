@@ -4,7 +4,11 @@ Facter.add('partitions') do
   require_relative '../puppet_x/disk_facts/underscore.rb'
   require 'json'
   setcode do
-    partitions = JSON.parse(Facter::Core::Execution.exec("powershell.exe -Command \"Get-Partition | Select-Object * -ExcludeProperty CimClass,CimInstanceProperties,CimSystemProperties | ConvertTo-Json -Depth 999 -Compress\""))
+    kernelmajversion = Facter.value('kernelmajversion')
+    next if kernelmajversion == '6.0' # Get-Partition is not available on Windows Server 2008
+    next if kernelmajversion == '6.1' # Get-Partition is not available on Windows Server 2008 R2
+
+    partitions = JSON.parse(Facter::Core::Execution.exec("powershell.exe -Command \"Get-Partition | Select-Object * -ExcludeProperty CimClass,CimInstanceProperties,CimSystemProperties | ConvertTo-Json -Depth 100 -Compress\""))
     partitions_renamed = []
 
     # Make sure that we can handle only one partition
