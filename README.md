@@ -39,3 +39,4 @@ notice($::drives['C']['free_bytes'])
 
   - @nicolasvan
   - @natemccurdy
+  - @covidium

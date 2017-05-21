@@ -8,7 +8,13 @@ Facter.add('partitions') do
     next if kernelmajversion == '6.0' # Get-Partition is not available on Windows Server 2008
     next if kernelmajversion == '6.1' # Get-Partition is not available on Windows Server 2008 R2
 
-    partitions = JSON.parse(Facter::Core::Execution.exec("powershell.exe -Command \"Get-Partition | Select-Object * -ExcludeProperty CimClass,CimInstanceProperties,CimSystemProperties | ConvertTo-Json -Depth 100 -Compress\""))
+    if kernelmajversion.split('.')[0].to_i >= 10 # If it's 2016 or newer we can no longer use depth > 100
+      depth = '100'
+    else
+      depth = '999'
+    end
+
+    partitions = JSON.parse(Facter::Core::Execution.exec("powershell.exe -Command \"Get-Partition | Select-Object * -ExcludeProperty CimClass,CimInstanceProperties,CimSystemProperties | ConvertTo-Json -Depth #{depth} -Compress\""))
     partitions_renamed = []
 
     # Make sure that we can handle only one partition
