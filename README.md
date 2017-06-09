@@ -15,7 +15,7 @@ The output of the Powershell `Get-Disk` command, but in a more Puppet-friendly f
 
 ### `$::drives`
 
-The output of the Powershell `Get-PSDrive -PSProvider 'FileSystem'` command, but in a more Puppet-friendly format + additional drive type information ('fixed' = local hard drive, 'removable' = removable devices like floppy and usb, 'cd-rom' = optical drives)
+The output of the Powershell `Get-PSDrive -PSProvider 'FileSystem'` command, but in a more Puppet-friendly format + additional drive type information ('Fixed' = local hard drive, 'Removable' = removable devices like floppy and usb, 'CD-ROM' = optical drives)
 
 ### `$::partitions`
 
