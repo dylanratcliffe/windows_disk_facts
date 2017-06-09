@@ -31,6 +31,13 @@ Facter.add('drives') do
     out.each do |letter,details|
       details.keys.each { |k| details["#{k}_bytes"] = details.delete(k) if details[k].is_a? Integer }
     end
+    
+    # Get the drive type 
+    # https://github.com/dylanratcliffe/windows_disk_facts/issues/3
+    out.each do | drive_letter, drive_details |
+       drive_details[:drivetype] = Facter::Core::Execution.exec("powershell.exe -Command \"(Get-Volume #{drive_letter}).DriveType\"")
+    end
+      
     out
   end
 end
