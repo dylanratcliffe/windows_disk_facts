@@ -4,15 +4,8 @@ Facter.add('drives') do
   require_relative '../puppet_x/disk_facts/underscore.rb'
   require 'json'
   setcode do
-    kernelmajversion = Facter.value('kernelmajversion')
 
-    if kernelmajversion.split('.')[0].to_i >= 10 # If it's 2016 or newer we can no longer use depth > 100
-      depth = '100'
-    else
-      depth = '999'
-    end
-
-    drives = JSON.parse(Facter::Core::Execution.exec("powershell.exe -Command \"Get-PSDrive -PSProvider 'FileSystem' | Select-Object * -ExcludeProperty Provider,Credential,CurrentLocation | ConvertTo-Json -Depth #{depth} -Compress\"")) rescue []
+    drives = JSON.parse(Facter::Core::Execution.exec("powershell.exe -Command \"Get-PSDrive -PSProvider 'FileSystem' | Select-Object * -ExcludeProperty Provider,Credential,CurrentLocation | ConvertTo-Json -Depth 100 -Compress\"")) rescue []
     drives_renamed = []
     out = {}
 
@@ -38,6 +31,13 @@ Facter.add('drives') do
     out.each do |letter,details|
       details.keys.each { |k| details["#{k}_bytes"] = details.delete(k) if details[k].is_a? Integer }
     end
+    
+    # Get the drive type 
+    # https://github.com/dylanratcliffe/windows_disk_facts/issues/3
+    out.each do | drive_letter, drive_details |
+       drive_details[:drivetype] = Facter::Core::Execution.exec("powershell.exe -Command \"(Get-Volume #{drive_letter}).DriveType\"")
+    end
+      
     out
   end
 end
