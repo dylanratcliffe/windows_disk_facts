@@ -7,6 +7,7 @@ Facter.add('disks') do
 
     disks_hashes = JSON.parse(Facter::Core::Execution.exec("powershell.exe -Command \"Get-Disk | Select-Object * -ExcludeProperty CimClass,CimInstanceProperties,CimSystemProperties | ConvertTo-Json -Depth 100 -Compress\"")) rescue []
     out = {}
+    disks_hashes_renamed = []
 
     # Make sure that we can handle only one disk
     disks_hashes = [disks_hashes] if disks_hashes.kind_of?(Hash)
