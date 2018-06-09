@@ -1,6 +1,6 @@
 {
   "name": "dylanratcliffe-windows_disk_facts",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "author": "Dylan Ratcliffe",
   "summary": "Disk related facts for Windows",
   "license": "Apache-2.0",
