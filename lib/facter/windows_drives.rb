@@ -5,7 +5,7 @@ Facter.add('drives') do
   require 'json'
   setcode do
 
-    drives = JSON.parse(Facter::Core::Execution.exec("powershell.exe -Command \"Get-PSDrive -PSProvider 'FileSystem' | Select-Object * -ExcludeProperty Provider,Credential,CurrentLocation | ConvertTo-Json -Depth 100 -Compress\"")) rescue []
+    drives = JSON.parse(Facter::Core::Execution.exec("powershell.exe -noprofile -Command \"Get-PSDrive -PSProvider 'FileSystem' | Select-Object * -ExcludeProperty Provider,Credential,CurrentLocation | ConvertTo-Json -Depth 100 -Compress\"")) rescue []
     drives_renamed = []
     out = {}
 
@@ -31,13 +31,13 @@ Facter.add('drives') do
     out.each do |letter,details|
       details.keys.each { |k| details["#{k}_bytes"] = details.delete(k) if details[k].is_a? Integer }
     end
-    
+
     # Get the drive type 
     # https://github.com/dylanratcliffe/windows_disk_facts/issues/3
     out.each do | drive_letter, drive_details |
-       drive_details[:drivetype] = Facter::Core::Execution.exec("powershell.exe -Command \"(Get-Volume #{drive_letter}).DriveType\"")
+       drive_details[:drivetype] = Facter::Core::Execution.exec("powershell.exe -noprofile -Command \"(Get-Volume #{drive_letter}).DriveType\"")
     end
-      
+
     out
   end
 end

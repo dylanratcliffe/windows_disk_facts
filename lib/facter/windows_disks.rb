@@ -5,7 +5,7 @@ Facter.add('disks') do
   require 'json'
   setcode do
 
-    disks_hashes = JSON.parse(Facter::Core::Execution.exec("powershell.exe -Command \"Get-Disk | Select-Object * -ExcludeProperty CimClass,CimInstanceProperties,CimSystemProperties | ConvertTo-Json -Depth 100 -Compress\"")) rescue []
+    disks_hashes = JSON.parse(Facter::Core::Execution.exec("powershell.exe -noprofile -Command \"Get-Disk | Select-Object * -ExcludeProperty CimClass,CimInstanceProperties,CimSystemProperties | ConvertTo-Json -Depth 100 -Compress\"")) rescue []
     out = {}
     disks_hashes_renamed = []
 
