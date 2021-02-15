@@ -8,9 +8,9 @@ Facter.add('partitions') do
   # set windows 2008 to true/False
   win2008 = Facter.value(:kernelmajversion) == '6.1' || Facter.value(:kernelmajversion) == '6.0'
   result = if win2008 == true
-             partitions = JSON.parse(Facter::Core::Execution.exec("powershell.exe -Command \"Get-PSDrive -PSProvider 'FileSystem' | Select-Object * -ExcludeProperty Provider,Credential,CurrentLocation | ConvertTo-Json -Depth 100 -Compress\""))
+             partitions = JSON.parse(Facter::Core::Execution.exec("powershell.exe -noprofile -Command \"Get-PSDrive -PSProvider 'FileSystem' | Select-Object * -ExcludeProperty Provider,Credential,CurrentLocation | ConvertTo-Json -Depth 100 -Compress\""))
            else
-             partitions = JSON.parse(Facter::Core::Execution.exec("powershell.exe -Command \"Get-Partition | Select-Object * -ExcludeProperty CimClass,CimInstanceProperties,CimSystemProperties | ConvertTo-Json -Depth 100 -Compress\""))
+             partitions = JSON.parse(Facter::Core::Execution.exec("powershell.exe -noprofile -Command \"Get-Partition | Select-Object * -ExcludeProperty CimClass,CimInstanceProperties,CimSystemProperties | ConvertTo-Json -Depth 100 -Compress\""))
            end
     partitions_renamed = []
 
