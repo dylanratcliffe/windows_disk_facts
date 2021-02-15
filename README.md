@@ -35,6 +35,18 @@ $::partitions.each |$partition| {
 notice($::drives['C']['free_bytes'])
 ```
 
+## Testing
+
+This module is tested using Litmus. Here ere the steps:
+
+```shell
+bundle exec rake 'litmus:provision_list[vagrant]'
+bundle exec rake 'litmus:install_agent'
+bundle exec rake 'litmus:install_module'
+bundle exec rake 'litmus:acceptance:parallel'
+bundle exec rake 'litmus:tear_down'
+```
+
 ## Contributors
 
   - [nicolasvan](https:///github.com/nicolasvan)
