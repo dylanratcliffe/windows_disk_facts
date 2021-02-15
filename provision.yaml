@@ -1,0 +1,4 @@
+---
+vagrant:
+  provisioner: vagrant
+  images: ["gusztavvargadr/windows-server"]
